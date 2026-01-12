@@ -173,8 +173,9 @@ fn check_internal_links(docs_path: &Path, result: &mut ValidationResult) -> Resu
             };
 
             // Remove anchor from path
-            let target_path = target.to_string_lossy().split('#').next().unwrap_or("");
-            let target_path = Path::new(target_path);
+            let target_str = target.to_string_lossy();
+            let target_path_str = target_str.split('#').next().unwrap_or("");
+            let target_path = Path::new(target_path_str);
 
             // Check if file exists (with or without .md extension)
             let exists = target_path.exists()
