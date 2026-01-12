@@ -51,10 +51,10 @@ fn load_or_create_config(root: &Path) -> Result<DocgenConfig> {
     let config_path = root.join("docgen.yaml");
 
     if config_path.exists() {
-        let content = std::fs::read_to_string(&config_path)
-            .context("Failed to read docgen.yaml")?;
-        let config: DocgenConfig = serde_yaml::from_str(&content)
-            .context("Failed to parse docgen.yaml")?;
+        let content =
+            std::fs::read_to_string(&config_path).context("Failed to read docgen.yaml")?;
+        let config: DocgenConfig =
+            serde_yaml::from_str(&content).context("Failed to parse docgen.yaml")?;
         return Ok(config);
     }
 
@@ -110,7 +110,11 @@ fn parse_package_json(path: &Path) -> Result<Option<PackageConfig>> {
     }
 
     // Determine package kind from name or path
-    let kind = if name.contains("adapter") || name.contains("oracle") || name.contains("drizzle") || name.contains("mongodb") {
+    let kind = if name.contains("adapter")
+        || name.contains("oracle")
+        || name.contains("drizzle")
+        || name.contains("mongodb")
+    {
         PackageKind::Adapter
     } else if name.contains("sveltekit") || name.contains("frontend") {
         PackageKind::Frontend
@@ -149,11 +153,7 @@ fn parse_package_json(path: &Path) -> Result<Option<PackageConfig>> {
 }
 
 /// Process a single package
-async fn process_package(
-    root: &Path,
-    output: &Path,
-    config: &PackageConfig,
-) -> Result<()> {
+async fn process_package(root: &Path, output: &Path, config: &PackageConfig) -> Result<()> {
     let pkg_path = if config.path.is_absolute() {
         config.path.clone()
     } else {
