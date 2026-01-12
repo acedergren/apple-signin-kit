@@ -231,7 +231,7 @@ We welcome contributions! Please see [CONTRIBUTING.md](CONTRIBUTING.md) for guid
 
 ### Reporting Security Issues
 
-For security vulnerabilities, please email security@example.com instead of opening a public issue. See [SECURITY.md](SECURITY.md) for our security policy.
+For security vulnerabilities, please email security@solutionsedge.io instead of opening a public issue. See [SECURITY.md](SECURITY.md) for our security policy.
 
 ## License
 
