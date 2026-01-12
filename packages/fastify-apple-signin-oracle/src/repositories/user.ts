@@ -10,8 +10,8 @@ import type {
   UserRepository,
   UserLockoutState,
 } from '@running-days/fastify-apple-auth';
-import oracledb from 'oracledb';
-import type { OraclePool, OracleConnection } from '../types.js';
+import type { OraclePool, OracleConnection, BindParameters, OracleResult } from '../types.js';
+import { OUT_FORMAT_OBJECT } from '../types.js';
 import { generateUUID, fromOracleDate } from '../utils.js';
 
 /**
@@ -34,8 +34,8 @@ export class OracleUserRepository implements UserRepository {
    */
   private async execute<T>(
     sql: string,
-    binds: oracledb.BindParameters,
-    handler: (result: oracledb.Result<unknown>) => T
+    binds: BindParameters,
+    handler: (result: OracleResult<unknown>) => T
   ): Promise<T> {
     let conn: OracleConnection | undefined;
     try {
@@ -47,7 +47,7 @@ export class OracleUserRepository implements UserRepository {
       }
 
       const result = await conn.execute(sql, binds, {
-        outFormat: oracledb.OUT_FORMAT_OBJECT,
+        outFormat: OUT_FORMAT_OBJECT,
         autoCommit: true,
       });
 
@@ -235,8 +235,8 @@ export class SingleConnectionUserRepository implements UserRepository {
 
   private async execute<T>(
     sql: string,
-    binds: oracledb.BindParameters,
-    handler: (result: oracledb.Result<unknown>) => T
+    binds: BindParameters,
+    handler: (result: OracleResult<unknown>) => T
   ): Promise<T> {
     if (this.debug) {
       console.log('[SingleConnectionUserRepository] SQL:', sql);
@@ -244,7 +244,7 @@ export class SingleConnectionUserRepository implements UserRepository {
     }
 
     const result = await this.connection.execute(sql, binds, {
-      outFormat: oracledb.OUT_FORMAT_OBJECT,
+      outFormat: OUT_FORMAT_OBJECT,
       autoCommit: true,
     });
 

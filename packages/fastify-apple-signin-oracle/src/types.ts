@@ -8,11 +8,53 @@ import type {
   UserRepository,
   RefreshTokenRepository,
 } from '@running-days/fastify-apple-auth';
-import type oracledb from 'oracledb';
 
-// Type aliases for cleaner code
-export type OraclePool = oracledb.Pool;
-export type OracleConnection = oracledb.Connection;
+/**
+ * Oracle output format constant.
+ * Value 4002 = OUT_FORMAT_OBJECT (return rows as objects)
+ */
+export const OUT_FORMAT_OBJECT = 4002;
+
+/**
+ * Oracle bind parameters type.
+ */
+export type BindParameters = Record<string, unknown> | unknown[];
+
+/**
+ * Oracle query result type.
+ */
+export interface OracleResult<T> {
+  rows?: T[];
+  rowsAffected?: number;
+  outBinds?: Record<string, unknown>;
+}
+
+/**
+ * Minimal Oracle Connection interface.
+ * Represents the subset of oracledb.Connection API we actually use.
+ */
+export interface OracleConnection {
+  execute<T = unknown>(
+    sql: string,
+    binds?: BindParameters,
+    options?: { outFormat?: number; autoCommit?: boolean }
+  ): Promise<OracleResult<T>>;
+  commit(): Promise<void>;
+  close(): Promise<void>;
+}
+
+/**
+ * Minimal Oracle Pool interface.
+ * Represents the subset of oracledb.Pool API we actually use.
+ */
+export interface OraclePool {
+  getConnection(): Promise<OracleConnection>;
+  close(drainTime?: number): Promise<void>;
+  connectionsInUse: number;
+  connectionsOpen: number;
+  poolMax: number;
+  poolMin: number;
+}
 
 /**
  * Result of createOracleAuthAdapter factory function.

@@ -9,8 +9,8 @@ import type {
   NewRefreshToken,
   RefreshTokenRepository,
 } from '@running-days/fastify-apple-auth';
-import oracledb from 'oracledb';
-import type { OraclePool, OracleConnection } from '../types.js';
+import type { OraclePool, OracleConnection, BindParameters, OracleResult } from '../types.js';
+import { OUT_FORMAT_OBJECT } from '../types.js';
 import { generateUUID, fromOracleBoolean, fromOracleDate } from '../utils.js';
 
 /**
@@ -33,8 +33,8 @@ export class OracleRefreshTokenRepository implements RefreshTokenRepository {
    */
   private async execute<T>(
     sql: string,
-    binds: oracledb.BindParameters,
-    handler: (result: oracledb.Result<unknown>) => T
+    binds: BindParameters,
+    handler: (result: OracleResult<unknown>) => T
   ): Promise<T> {
     let conn: OracleConnection | undefined;
     try {
@@ -46,7 +46,7 @@ export class OracleRefreshTokenRepository implements RefreshTokenRepository {
       }
 
       const result = await conn.execute(sql, binds, {
-        outFormat: oracledb.OUT_FORMAT_OBJECT,
+        outFormat: OUT_FORMAT_OBJECT,
         autoCommit: true,
       });
 
@@ -228,8 +228,8 @@ export class SingleConnectionRefreshTokenRepository implements RefreshTokenRepos
 
   private async execute<T>(
     sql: string,
-    binds: oracledb.BindParameters,
-    handler: (result: oracledb.Result<unknown>) => T
+    binds: BindParameters,
+    handler: (result: OracleResult<unknown>) => T
   ): Promise<T> {
     if (this.debug) {
       console.log('[SingleConnectionRefreshTokenRepository] SQL:', sql);
@@ -237,7 +237,7 @@ export class SingleConnectionRefreshTokenRepository implements RefreshTokenRepos
     }
 
     const result = await this.connection.execute(sql, binds, {
-      outFormat: oracledb.OUT_FORMAT_OBJECT,
+      outFormat: OUT_FORMAT_OBJECT,
       autoCommit: true,
     });
 
