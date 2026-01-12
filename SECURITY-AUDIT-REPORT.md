@@ -2,7 +2,7 @@
 
 **Audit Date:** 2026-01-12
 **Auditor:** Claude Code (Security Auditor Mode)
-**Scope:** `/home/alex/projects/apple-signin-sdk`
+**Scope:** `/home/alex/projects/apple-signin-kit`
 **Classification:** Internal Security Review
 
 ---

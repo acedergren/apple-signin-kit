@@ -1,6 +1,6 @@
-# Apple Auth Kit
+# Apple Sign-In Kit
 
-[![CI](https://github.com/acedergren/apple-auth-kit/actions/workflows/ci.yml/badge.svg)](https://github.com/acedergren/apple-auth-kit/actions/workflows/ci.yml)
+[![CI](https://github.com/acedergren/apple-signin-kit/actions/workflows/ci.yml/badge.svg)](https://github.com/acedergren/apple-signin-kit/actions/workflows/ci.yml)
 [![License](https://img.shields.io/badge/license-Apache--2.0-blue.svg)](LICENSE)
 [![TypeScript](https://img.shields.io/badge/TypeScript-5.4+-blue.svg)](https://www.typescriptlang.org/)
 
@@ -25,7 +25,7 @@ Production-grade Apple Sign-In SDK ecosystem with PKCE, account lockout, session
 | [`@acedergren/fastify-apple-auth`](./packages/fastify-apple-auth) | Fastify plugin with full OAuth flow | [![npm](https://img.shields.io/npm/v/@acedergren/fastify-apple-auth.svg)](https://www.npmjs.com/package/@acedergren/fastify-apple-auth) |
 | [`@acedergren/apple-auth-core`](./packages/apple-auth-core) | Framework-agnostic auth logic | [![npm](https://img.shields.io/npm/v/@acedergren/apple-auth-core.svg)](https://www.npmjs.com/package/@acedergren/apple-auth-core) |
 | [`@acedergren/sveltekit-apple-auth`](./packages/sveltekit-apple-auth) | SvelteKit client integration | Coming Soon |
-| `apple-auth-kit` (SPM) | Swift iOS SDK | Coming Soon |
+| `apple-signin-kit` (SPM) | Swift iOS SDK | Coming Soon |
 
 ## Quick Start
 
@@ -84,7 +84,7 @@ let response = try await APIClient.authenticate(
 
 ```
 ┌─────────────────────────────────────────────────────────────────┐
-│                        Apple Auth Kit                           │
+│                        Apple Sign-In Kit                           │
 ├─────────────────────────────────────────────────────────────────┤
 │  ┌─────────────┐  ┌─────────────┐  ┌─────────────────────────┐  │
 │  │   Fastify   │  │  SvelteKit  │  │      iOS (Swift)        │  │
@@ -111,7 +111,7 @@ let response = try await APIClient.authenticate(
 
 ### PKCE (RFC 7636)
 
-Apple Auth Kit implements the S256 code challenge method:
+Apple Sign-In Kit implements the S256 code challenge method:
 
 ```typescript
 import { generateCodeVerifier, generateCodeChallenge } from '@acedergren/apple-auth-core';
@@ -160,7 +160,7 @@ if (status.isLocked) {
 
 ## Apple Compliance
 
-Apple Auth Kit is **fully compliant** with Apple's official requirements:
+Apple Sign-In Kit is **fully compliant** with Apple's official requirements:
 
 | Apple Requirement | Implementation |
 |-------------------|----------------|
@@ -178,17 +178,17 @@ Apple Auth Kit is **fully compliant** with Apple's official requirements:
 
 ## Documentation
 
-- [Getting Started Guide](https://acedergren.github.io/apple-auth-kit/getting-started/)
-- [API Reference](https://acedergren.github.io/apple-auth-kit/api/)
-- [Security Best Practices](https://acedergren.github.io/apple-auth-kit/security/)
-- [Database Adapters](https://acedergren.github.io/apple-auth-kit/adapters/)
+- [Getting Started Guide](https://acedergren.github.io/apple-signin-kit/getting-started/)
+- [API Reference](https://acedergren.github.io/apple-signin-kit/api/)
+- [Security Best Practices](https://acedergren.github.io/apple-signin-kit/security/)
+- [Database Adapters](https://acedergren.github.io/apple-signin-kit/adapters/)
 
 ## Development
 
 ```bash
 # Clone repository
-git clone https://github.com/acedergren/apple-auth-kit.git
-cd apple-auth-kit
+git clone https://github.com/acedergren/apple-signin-kit.git
+cd apple-signin-kit
 
 # Install dependencies
 pnpm install
@@ -212,7 +212,7 @@ pnpm lint
 ### Project Structure
 
 ```
-apple-auth-kit/
+apple-signin-kit/
 ├── packages/
 │   ├── fastify-apple-auth/    # Fastify plugin
 │   ├── apple-auth-core/       # Framework-agnostic core

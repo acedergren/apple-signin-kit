@@ -4,7 +4,7 @@ Thank you for your interest in contributing to the Apple Sign-In SDK!
 
 ## Code of Conduct
 
-Please read and follow our [Code of Conduct](https://github.com/acedergren/apple-signin-sdk/blob/main/CODE_OF_CONDUCT.md).
+Please read and follow our [Code of Conduct](https://github.com/acedergren/apple-signin-kit/blob/main/CODE_OF_CONDUCT.md).
 
 ## Getting Started
 
@@ -18,8 +18,8 @@ Please read and follow our [Code of Conduct](https://github.com/acedergren/apple
 
 ```bash
 # Clone the repository
-git clone https://github.com/acedergren/apple-signin-sdk.git
-cd apple-signin-sdk
+git clone https://github.com/acedergren/apple-signin-kit.git
+cd apple-signin-kit
 
 # Install dependencies
 pnpm install
@@ -108,7 +108,7 @@ pnpm changeset
 ## Project Structure
 
 ```
-apple-signin-sdk/
+apple-signin-kit/
 ├── packages/
 │   ├── fastify-apple-auth/       # Core backend
 │   ├── fastify-apple-signin-oracle/
@@ -277,8 +277,8 @@ Releases are automated via GitHub Actions:
 
 ## Getting Help
 
-- [GitHub Discussions](https://github.com/acedergren/apple-signin-sdk/discussions)
-- [Issue Tracker](https://github.com/acedergren/apple-signin-sdk/issues)
+- [GitHub Discussions](https://github.com/acedergren/apple-signin-kit/discussions)
+- [Issue Tracker](https://github.com/acedergren/apple-signin-kit/issues)
 
 ## License
 

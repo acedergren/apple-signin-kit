@@ -92,7 +92,7 @@ Add to your `Package.swift`:
 ```swift
 dependencies: [
     .package(
-        url: "https://github.com/acedergren/apple-signin-sdk",
+        url: "https://github.com/acedergren/apple-signin-kit",
         from: "1.0.0"
     )
 ]
@@ -104,7 +104,7 @@ Then add the target dependency:
 .target(
     name: "YourApp",
     dependencies: [
-        .product(name: "AppleSignInKit", package: "apple-signin-sdk")
+        .product(name: "AppleSignInKit", package: "apple-signin-kit")
     ]
 )
 ```
@@ -112,7 +112,7 @@ Then add the target dependency:
 ### Xcode
 
 1. File → Add Package Dependencies
-2. Enter: `https://github.com/acedergren/apple-signin-sdk`
+2. Enter: `https://github.com/acedergren/apple-signin-kit`
 3. Select version: `1.0.0` or later
 4. Add `AppleSignInKit` to your target
 

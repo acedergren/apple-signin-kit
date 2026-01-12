@@ -90,7 +90,7 @@ This monorepo provides a complete Apple Sign-In solution across multiple platfor
     ```swift
     // Package.swift
     dependencies: [
-      .package(url: "https://github.com/acedergren/apple-signin-sdk", from: "1.0.0")
+      .package(url: "https://github.com/acedergren/apple-signin-kit", from: "1.0.0")
     ]
     ```
 
@@ -125,4 +125,4 @@ graph TB
 
 ## License
 
-Apache 2.0 - See [LICENSE](https://github.com/acedergren/apple-signin-sdk/blob/main/LICENSE) for details.
+Apache 2.0 - See [LICENSE](https://github.com/acedergren/apple-signin-kit/blob/main/LICENSE) for details.

@@ -44,7 +44,7 @@ await app.register(appleAuthPlugin, {
   jwt: {
     accessTokenTtl?: string;   // Default: '15m'
     refreshTokenTtl?: string;  // Default: '7d'
-    issuer?: string;           // Default: 'apple-signin-sdk'
+    issuer?: string;           // Default: 'apple-signin-kit'
     audience?: string;         // Default: clientId
   },
   cookies: {

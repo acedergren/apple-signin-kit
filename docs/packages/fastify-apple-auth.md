@@ -86,7 +86,7 @@ interface JwtConfig {
   /** Refresh token TTL (default: '7d') */
   refreshTokenTtl?: string;
 
-  /** Token issuer (default: 'apple-signin-sdk') */
+  /** Token issuer (default: 'apple-signin-kit') */
   issuer?: string;
 }
 ```

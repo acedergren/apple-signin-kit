@@ -140,7 +140,7 @@ export const handle = createAuthHooks({
 In Xcode: File → Add Package Dependencies → Enter URL:
 
 ```
-https://github.com/acedergren/apple-signin-sdk
+https://github.com/acedergren/apple-signin-kit
 ```
 
 ### 2. Enable Capability

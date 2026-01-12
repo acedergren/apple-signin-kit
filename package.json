@@ -1,11 +1,11 @@
 {
-  "name": "apple-signin-sdk",
+  "name": "apple-signin-kit",
   "version": "1.0.0",
   "private": true,
   "description": "Production-grade Apple Sign-In SDK ecosystem",
   "repository": {
     "type": "git",
-    "url": "https://github.com/acedergren/apple-signin-sdk.git"
+    "url": "https://github.com/acedergren/apple-signin-kit.git"
   },
   "author": "Alex Cedergren <alex@cedergren.dev>",
   "license": "MIT",

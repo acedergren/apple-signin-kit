@@ -1,10 +1,10 @@
 site_name: Apple Sign-In SDK
 site_description: Production-grade Apple Sign-In ecosystem for Fastify, SvelteKit, and iOS
 site_author: Alex Cedergren
-site_url: https://acedergren.github.io/apple-signin-sdk/
+site_url: https://acedergren.github.io/apple-signin-kit/
 
-repo_name: acedergren/apple-signin-sdk
-repo_url: https://github.com/acedergren/apple-signin-sdk
+repo_name: acedergren/apple-signin-kit
+repo_url: https://github.com/acedergren/apple-signin-kit
 edit_uri: edit/main/docs/
 
 theme:
