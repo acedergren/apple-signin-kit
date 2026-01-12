@@ -36,7 +36,7 @@ pub async fn run(root: &str, strict: bool) -> Result<()> {
         for entry in WalkDir::new(&docs_path)
             .into_iter()
             .filter_map(|e| e.ok())
-            .filter(|e| e.path().extension().map_or(false, |ext| ext == "md"))
+            .filter(|e| e.path().extension().is_some_and(|ext| ext == "md"))
         {
             validate_markdown_file(entry.path(), &mut result)?;
         }
@@ -152,7 +152,7 @@ fn check_internal_links(docs_path: &Path, result: &mut ValidationResult) -> Resu
     for entry in WalkDir::new(docs_path)
         .into_iter()
         .filter_map(|e| e.ok())
-        .filter(|e| e.path().extension().map_or(false, |ext| ext == "md"))
+        .filter(|e| e.path().extension().is_some_and(|ext| ext == "md"))
     {
         let content = std::fs::read_to_string(entry.path())?;
         let file_dir = entry.path().parent().unwrap_or(docs_path);
@@ -166,8 +166,8 @@ fn check_internal_links(docs_path: &Path, result: &mut ValidationResult) -> Resu
             }
 
             // Resolve relative path
-            let target = if link.starts_with('/') {
-                docs_path.join(&link[1..])
+            let target = if let Some(stripped) = link.strip_prefix('/') {
+                docs_path.join(stripped)
             } else {
                 file_dir.join(link)
             };

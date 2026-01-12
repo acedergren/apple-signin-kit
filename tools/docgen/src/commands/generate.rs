@@ -24,7 +24,7 @@ pub async fn run(root: &str, output: &str, package_filter: Option<&str>) -> Resu
     let packages: Vec<_> = config
         .packages
         .iter()
-        .filter(|p| package_filter.map_or(true, |f| p.name.contains(f)))
+        .filter(|p| package_filter.is_none_or(|f| p.name.contains(f)))
         .collect();
 
     if packages.is_empty() {
@@ -128,7 +128,7 @@ fn parse_package_json(path: &Path) -> Result<Option<PackageConfig>> {
     let mut entry_points = vec!["src/index.ts".to_string()];
     if let Some(exports) = pkg.get("exports") {
         if let Some(obj) = exports.as_object() {
-            for (key, value) in obj {
+            for (_key, value) in obj {
                 if let Some(import_path) = value.get("import").and_then(|v| v.as_str()) {
                     if !entry_points.contains(&import_path.to_string()) {
                         entry_points.push(import_path.replace("./", ""));

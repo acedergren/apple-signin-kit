@@ -9,9 +9,7 @@ use std::path::Path;
 use tracing::{debug, info};
 use walkdir::WalkDir;
 
-use crate::types::{
-    Export, ExportKind, ExtractedDocs, Package, PackageConfig, PackageKind, Parameter,
-};
+use crate::types::{Export, ExportKind, ExtractedDocs, Package, PackageConfig, Parameter};
 
 /// Extract documentation from a TypeScript package
 pub async fn extract_package(path: &Path, config: &PackageConfig) -> Result<ExtractedDocs> {
@@ -36,15 +34,16 @@ pub async fn extract_package(path: &Path, config: &PackageConfig) -> Result<Extr
             .filter_map(|e| e.ok())
             .filter(|e| {
                 let path = e.path();
-                path.extension().map_or(false, |ext| ext == "ts" || ext == "tsx")
+                path.extension()
+                    .is_some_and(|ext| ext == "ts" || ext == "tsx")
                     && !is_excluded(path, &config.exclude)
             })
         {
             let file_path = entry.path().to_path_buf();
-            if !files.contains_key(&file_path) {
+            if let std::collections::hash_map::Entry::Vacant(e) = files.entry(file_path.clone()) {
                 let exports = extract_file(&file_path).await?;
                 if !exports.is_empty() {
-                    files.insert(file_path, exports);
+                    e.insert(exports);
                 }
             }
         }
@@ -103,7 +102,7 @@ pub async fn extract_file(path: &Path) -> Result<Vec<Export>> {
 
     for cap in interface_re.captures_iter(&content) {
         let name = cap[1].to_string();
-        let body = cap.get(2).map_or("", |m| m.as_str());
+        let _body = cap.get(2).map_or("", |m| m.as_str());
         let jsdoc = extract_jsdoc(&content, cap.get(0).unwrap().start());
 
         exports.push(Export {
@@ -360,20 +359,23 @@ fn extract_jsdoc(content: &str, export_start: usize) -> JsDoc {
             for line in comment.lines() {
                 let line = line.trim().trim_start_matches('*').trim();
 
-                if line.starts_with("@param") {
-                    let parts: Vec<&str> = line[6..].trim().splitn(2, ' ').collect();
+                if let Some(rest) = line.strip_prefix("@param") {
+                    let parts: Vec<&str> = rest.trim().splitn(2, ' ').collect();
                     if parts.len() >= 2 {
                         jsdoc.params.insert(
                             parts[0].trim_start_matches('{').trim_end_matches('}').to_string(),
                             parts.get(1).unwrap_or(&"").to_string(),
                         );
                     }
-                } else if line.starts_with("@returns") || line.starts_with("@return") {
-                    jsdoc.returns = Some(line[8..].trim().to_string());
+                } else if let Some(rest) = line
+                    .strip_prefix("@returns")
+                    .or_else(|| line.strip_prefix("@return"))
+                {
+                    jsdoc.returns = Some(rest.trim().to_string());
                 } else if line.starts_with("@example") {
                     in_example = true;
-                } else if line.starts_with("@deprecated") {
-                    jsdoc.deprecated = Some(line[11..].trim().to_string());
+                } else if let Some(rest) = line.strip_prefix("@deprecated") {
+                    jsdoc.deprecated = Some(rest.trim().to_string());
                 } else if line.starts_with('@') {
                     if in_example && !current_example.is_empty() {
                         jsdoc.examples.push(current_example.trim().to_string());

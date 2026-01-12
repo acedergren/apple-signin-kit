@@ -1,7 +1,6 @@
 //! File watching command for live documentation regeneration
 
 use anyhow::Result;
-use std::path::Path;
 use std::time::Duration;
 use tokio::time::sleep;
 use tracing::{info, warn};
