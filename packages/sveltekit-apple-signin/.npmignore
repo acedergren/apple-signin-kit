@@ -1,0 +1,23 @@
+# Source files (use dist)
+src/
+
+# Config files
+tsconfig.json
+svelte.config.js
+vite.config.ts
+.eslintrc.*
+.prettierrc
+.gitignore
+
+# Build artifacts not needed
+.svelte-kit/
+node_modules/
+
+# Tests
+**/*.test.ts
+**/*.spec.ts
+coverage/
+
+# Dev files
+*.log
+.env*

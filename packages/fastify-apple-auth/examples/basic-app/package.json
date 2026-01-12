@@ -1,0 +1,23 @@
+{
+  "name": "fastify-apple-auth-example",
+  "version": "1.0.0",
+  "description": "Example app demonstrating @running-days/fastify-apple-auth",
+  "type": "module",
+  "scripts": {
+    "start": "node --loader ts-node/esm index.ts",
+    "dev": "node --loader ts-node/esm --watch index.ts"
+  },
+  "dependencies": {
+    "fastify": "^5.0.0",
+    "@fastify/cookie": "^11.0.0",
+    "@fastify/sensible": "^6.0.0",
+    "@fastify/rate-limit": "^10.0.0",
+    "@running-days/fastify-apple-auth": "workspace:*"
+  },
+  "devDependencies": {
+    "typescript": "^5.7.0",
+    "ts-node": "^10.9.0",
+    "@types/node": "^22.0.0",
+    "pino-pretty": "^13.0.0"
+  }
+}

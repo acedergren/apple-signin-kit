@@ -1,0 +1,83 @@
+{
+  "name": "@acedergren/fastify-apple-signin-oracle",
+  "version": "1.0.0",
+  "description": "Oracle Database adapter for @running-days/fastify-apple-auth - provides UserRepository and RefreshTokenRepository implementations for Apple Sign-In",
+  "type": "module",
+  "main": "./dist/index.js",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js",
+      "require": "./dist/index.js"
+    },
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "dist",
+    "src/schema.sql",
+    "README.md",
+    "LICENSE"
+  ],
+  "scripts": {
+    "build": "tsc",
+    "dev": "tsc --watch",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "test:coverage": "vitest run --coverage",
+    "lint": "eslint src/",
+    "typecheck": "tsc --noEmit",
+    "clean": "rm -rf dist",
+    "prepublishOnly": "npm run clean && npm run build && npm run test"
+  },
+  "keywords": [
+    "fastify",
+    "apple-sign-in",
+    "apple-signin",
+    "apple-auth",
+    "authentication",
+    "oracle",
+    "oracledb",
+    "oracle-database",
+    "database",
+    "adapter",
+    "jwt",
+    "refresh-token",
+    "session-management"
+  ],
+  "author": "Running Days Team",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/acedergren/running-days.git",
+    "directory": "packages/fastify-apple-signin-oracle"
+  },
+  "homepage": "https://github.com/acedergren/running-days/tree/main/packages/fastify-apple-signin-oracle#readme",
+  "bugs": {
+    "url": "https://github.com/acedergren/running-days/issues"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "peerDependencies": {
+    "@running-days/fastify-apple-auth": "^1.0.0",
+    "oracledb": "^6.0.0"
+  },
+  "peerDependenciesMeta": {
+    "@running-days/fastify-apple-auth": {
+      "optional": false
+    },
+    "oracledb": {
+      "optional": false
+    }
+  },
+  "devDependencies": {
+    "@running-days/fastify-apple-auth": "workspace:*",
+    "@types/node": "^22.10.2",
+    "@vitest/coverage-v8": "^2.1.8",
+    "oracledb": "^6.7.0",
+    "typescript": "^5.7.2",
+    "vitest": "^2.1.8"
+  }
+}

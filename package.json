@@ -1,0 +1,33 @@
+{
+  "name": "apple-signin-sdk",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Production-grade Apple Sign-In SDK ecosystem",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/acedergren/apple-signin-sdk.git"
+  },
+  "author": "Alex Cedergren <alex@cedergren.dev>",
+  "license": "MIT",
+  "scripts": {
+    "build": "turbo run build",
+    "test": "turbo run test",
+    "lint": "turbo run lint",
+    "check": "turbo run check",
+    "clean": "turbo run clean && rm -rf node_modules",
+    "format": "prettier --write \"**/*.{ts,tsx,js,jsx,json,md,svelte}\"",
+    "changeset": "changeset",
+    "version": "changeset version",
+    "publish": "turbo run build && changeset publish"
+  },
+  "devDependencies": {
+    "@changesets/cli": "^2.27.0",
+    "prettier": "^3.4.0",
+    "turbo": "^2.4.0",
+    "typescript": "^5.7.0"
+  },
+  "packageManager": "pnpm@9.15.0",
+  "engines": {
+    "node": ">=20"
+  }
+}

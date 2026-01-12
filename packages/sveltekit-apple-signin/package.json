@@ -1,0 +1,84 @@
+{
+  "name": "@acedergren/sveltekit-apple-signin",
+  "version": "1.0.0",
+  "description": "Zero-config Apple Sign-In SDK for SvelteKit 2 with Svelte 5 runes support",
+  "keywords": [
+    "sveltekit",
+    "svelte",
+    "svelte5",
+    "apple-sign-in",
+    "authentication",
+    "oauth",
+    "siwa"
+  ],
+  "author": "Alex Cedergren <alex@cedergren.dev>",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/acedergren/sveltekit-apple-signin.git"
+  },
+  "homepage": "https://github.com/acedergren/sveltekit-apple-signin#readme",
+  "bugs": {
+    "url": "https://github.com/acedergren/sveltekit-apple-signin/issues"
+  },
+  "type": "module",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "svelte": "./dist/index.js",
+      "default": "./dist/index.js"
+    },
+    "./hooks": {
+      "types": "./dist/lib/hooks.server.d.ts",
+      "default": "./dist/lib/hooks.server.js"
+    },
+    "./stores": {
+      "types": "./dist/lib/stores.d.ts",
+      "svelte": "./dist/lib/stores.js",
+      "default": "./dist/lib/stores.js"
+    },
+    "./components": {
+      "types": "./dist/lib/components/index.d.ts",
+      "svelte": "./dist/lib/components/index.js",
+      "default": "./dist/lib/components/index.js"
+    }
+  },
+  "files": [
+    "dist",
+    "!dist/**/*.test.*"
+  ],
+  "svelte": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "scripts": {
+    "dev": "vite dev",
+    "build": "svelte-kit sync && svelte-package -o dist",
+    "prepublishOnly": "pnpm run build",
+    "check": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json",
+    "check:watch": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json --watch",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "lint": "eslint .",
+    "format": "prettier --write ."
+  },
+  "peerDependencies": {
+    "@sveltejs/kit": "^2.0.0",
+    "svelte": "^5.0.0"
+  },
+  "devDependencies": {
+    "@sveltejs/adapter-auto": "^3.0.0",
+    "@sveltejs/kit": "^2.0.0",
+    "@sveltejs/package": "^2.3.0",
+    "@sveltejs/vite-plugin-svelte": "^4.0.0",
+    "@types/node": "^22.0.0",
+    "eslint": "^9.0.0",
+    "prettier": "^3.0.0",
+    "svelte": "^5.0.0",
+    "svelte-check": "^4.0.0",
+    "typescript": "^5.6.0",
+    "vite": "^6.0.0",
+    "vitest": "^2.0.0"
+  },
+  "engines": {
+    "node": ">=20"
+  }
+}

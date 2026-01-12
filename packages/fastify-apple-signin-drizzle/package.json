@@ -1,0 +1,84 @@
+{
+  "name": "@acedergren/fastify-apple-signin-drizzle",
+  "version": "1.0.0",
+  "description": "Drizzle ORM adapter for @acedergren/fastify-apple-auth - supports PostgreSQL, MySQL, and SQLite",
+  "main": "dist/index.js",
+  "module": "dist/index.mjs",
+  "types": "dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.mjs",
+      "require": "./dist/index.js"
+    },
+    "./schema/pg": {
+      "types": "./dist/schema/pg.d.ts",
+      "import": "./dist/schema/pg.mjs",
+      "require": "./dist/schema/pg.js"
+    },
+    "./schema/mysql": {
+      "types": "./dist/schema/mysql.d.ts",
+      "import": "./dist/schema/mysql.mjs",
+      "require": "./dist/schema/mysql.js"
+    },
+    "./schema/sqlite": {
+      "types": "./dist/schema/sqlite.d.ts",
+      "import": "./dist/schema/sqlite.mjs",
+      "require": "./dist/schema/sqlite.js"
+    }
+  },
+  "files": [
+    "dist",
+    "migrations"
+  ],
+  "scripts": {
+    "build": "tsup src/index.ts src/schema/pg.ts src/schema/mysql.ts src/schema/sqlite.ts --format cjs,esm --dts --clean",
+    "dev": "tsup src/index.ts src/schema/pg.ts src/schema/mysql.ts src/schema/sqlite.ts --format cjs,esm --dts --watch",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "test:coverage": "vitest run --coverage",
+    "lint": "eslint src/",
+    "typecheck": "tsc --noEmit",
+    "prepublishOnly": "npm run build"
+  },
+  "keywords": [
+    "fastify",
+    "apple-signin",
+    "drizzle",
+    "drizzle-orm",
+    "postgresql",
+    "mysql",
+    "sqlite",
+    "authentication",
+    "oauth"
+  ],
+  "author": "Alexander Cedergren",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/acedergren/running-days.git",
+    "directory": "packages/fastify-apple-signin-drizzle"
+  },
+  "bugs": {
+    "url": "https://github.com/acedergren/running-days/issues"
+  },
+  "homepage": "https://github.com/acedergren/running-days/tree/main/packages/fastify-apple-signin-drizzle#readme",
+  "peerDependencies": {
+    "drizzle-orm": ">=0.29.0"
+  },
+  "peerDependenciesMeta": {
+    "drizzle-orm": {
+      "optional": false
+    }
+  },
+  "devDependencies": {
+    "@types/node": "^22.10.1",
+    "drizzle-orm": "^0.38.3",
+    "tsup": "^8.3.5",
+    "typescript": "^5.7.2",
+    "vitest": "^2.1.8"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  }
+}
