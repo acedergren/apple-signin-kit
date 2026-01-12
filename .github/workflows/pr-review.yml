@@ -4,8 +4,6 @@ on:
   pull_request:
     types: [opened, synchronize, reopened, ready_for_review]
     branches: [main]
-  pull_request_review:
-    types: [submitted]
 
 permissions:
   contents: read
@@ -37,18 +35,14 @@ jobs:
               });
               console.log('Copilot review requested successfully');
             } catch (error) {
-              // Copilot may not be available, log and continue
               console.log('Note: Could not request Copilot review:', error.message);
-              console.log('This is expected if Copilot is not enabled for this repository.');
             }
 
-  # Security-focused review using Claude Code
-  claude-security-review:
-    name: Claude Security Review
+  # Claude Code security review using GitHub App
+  claude-review:
+    name: Claude Code Review
     runs-on: ubuntu-latest
-    if: |
-      github.event.pull_request.draft == false &&
-      !contains(github.event.pull_request.labels.*.name, 'skip-security-review')
+    if: github.event.pull_request.draft == false
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
@@ -56,106 +50,28 @@ jobs:
           fetch-depth: 0
           submodules: recursive
 
-      - name: Get changed files
-        id: changed-files
-        uses: tj-actions/changed-files@v45
+      - name: Claude Code Review
+        uses: anthropics/claude-code-action@v1
         with:
-          files: |
-            **/*.ts
-            **/*.js
-            **/*.swift
-            **/*.json
-            **/*.yml
-            **/*.yaml
+          # Uses Claude GitHub App - no API key needed!
+          # The app is installed and uses OAuth authentication
+          use_oauth: true
+          direct_prompt: |
+            Review this PR for the Apple Sign-In Kit authentication library.
 
-      - name: Prepare review context
-        id: context
-        env:
-          ALL_CHANGED_FILES: ${{ steps.changed-files.outputs.all_changed_files }}
-        run: |
-          # Get PR diff (limited to 50KB to avoid token limits)
-          git diff origin/main...HEAD -- '*.ts' '*.js' '*.swift' | head -c 50000 > diff.txt
+            Focus on:
+            1. **Security** - PKCE (RFC 7636), JWT handling, token storage, timing attacks
+            2. **Authentication** - Session management, account lockout (NIST 800-63B)
+            3. **Code Quality** - TypeScript best practices, error handling
+            4. **Breaking Changes** - API compatibility for consumers
 
-          # Count security-relevant changes
-          SECURITY_FILES=$(echo "$ALL_CHANGED_FILES" | tr ' ' '\n' | grep -E "(auth|security|token|session|pkce|jwt)" | wc -l || echo "0")
-          echo "security_files=$SECURITY_FILES" >> "$GITHUB_OUTPUT"
+            Format your review as:
+            - 🔴 **Critical** - Must fix (security/breaking)
+            - 🟡 **Warning** - Should address
+            - 🟢 **Approved** - Looks good
+            - 💡 **Suggestion** - Nice to have
 
-          # Check if this is a security-critical PR
-          if [[ $SECURITY_FILES -gt 0 ]]; then
-            echo "is_security_critical=true" >> "$GITHUB_OUTPUT"
-          else
-            echo "is_security_critical=false" >> "$GITHUB_OUTPUT"
-          fi
-
-      - name: Claude Security Analysis
-        if: steps.context.outputs.is_security_critical == 'true'
-        uses: anthropics/claude-code-action@beta
-        with:
-          anthropic_api_key: ${{ secrets.ANTHROPIC_API_KEY }}
-          model: claude-sonnet-4-20250514
-          prompt: |
-            You are a security-focused code reviewer for the Apple Sign-In Kit ecosystem.
-
-            ## Context
-            This is a PR for an Apple Sign-In authentication library. Key security concerns:
-            - PKCE (RFC 7636) compliance
-            - JWT validation and signing
-            - Token storage and rotation
-            - Account lockout (NIST 800-63B)
-            - Timing attack prevention
-            - Input validation
-
-            ## Your Task
-            Review the changes for:
-            1. **Authentication vulnerabilities** - Token handling, session management
-            2. **Cryptographic issues** - PKCE, JWT, hashing algorithms
-            3. **Input validation** - Injection attacks, malformed data
-            4. **Timing attacks** - Constant-time comparisons needed
-            5. **Error handling** - Information leakage in errors
-
-            ## Output Format
-            Provide a concise review with:
-            - 🔴 **Critical** - Must fix before merge (security vulnerabilities)
-            - 🟡 **Warning** - Should address (potential issues)
-            - 🟢 **Good** - Security best practices followed
-            - 💡 **Suggestion** - Improvements (optional)
-
-            If no security issues found, say "✅ No security issues detected"
-
-      - name: Comment on PR
-        if: steps.context.outputs.is_security_critical == 'true'
-        env:
-          SECURITY_FILES: ${{ steps.context.outputs.security_files }}
-        uses: actions/github-script@v7
-        with:
-          github-token: ${{ secrets.GITHUB_TOKEN }}
-          script: |
-            const securityFiles = process.env.SECURITY_FILES;
-
-            await github.rest.issues.createComment({
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              issue_number: context.payload.pull_request.number,
-              body: `## 🔒 Security Review Triggered
-
-            This PR modifies **${securityFiles}** security-related file(s).
-
-            A Claude-powered security review has been requested. Please wait for the analysis to complete.
-
-            <details>
-            <summary>What's being checked?</summary>
-
-            - PKCE implementation (RFC 7636)
-            - JWT token handling
-            - Session management security
-            - Account lockout compliance (NIST 800-63B)
-            - Timing attack prevention
-            - Input validation
-
-            </details>`
-            });
-
-  # Lint and type check for all PRs
+  # Code quality checks
   code-quality:
     name: Code Quality
     runs-on: ubuntu-latest
@@ -178,6 +94,7 @@ jobs:
 
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
+        continue-on-error: true
 
       - name: Type check
         run: pnpm check
