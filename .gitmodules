@@ -1,0 +1,18 @@
+[submodule "packages/fastify-apple-auth"]
+	path = packages/fastify-apple-auth
+	url = https://github.com/acedergren/fastify-apple-auth.git
+[submodule "packages/apple-signin-oracle"]
+	path = packages/apple-signin-oracle
+	url = https://github.com/acedergren/apple-signin-oracle.git
+[submodule "packages/apple-signin-drizzle"]
+	path = packages/apple-signin-drizzle
+	url = https://github.com/acedergren/apple-signin-drizzle.git
+[submodule "packages/apple-signin-mongodb"]
+	path = packages/apple-signin-mongodb
+	url = https://github.com/acedergren/apple-signin-mongodb.git
+[submodule "packages/sveltekit-apple-signin"]
+	path = packages/sveltekit-apple-signin
+	url = https://github.com/acedergren/sveltekit-apple-signin.git
+[submodule "packages/apple-signin-swift"]
+	path = packages/apple-signin-swift
+	url = https://github.com/acedergren/apple-signin-swift.git

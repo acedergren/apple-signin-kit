@@ -1,0 +1,103 @@
+site_name: Apple Sign-In SDK
+site_description: Production-grade Apple Sign-In ecosystem for Fastify, SvelteKit, and iOS
+site_author: Alex Cedergren
+site_url: https://acedergren.github.io/apple-signin-kit/
+
+repo_name: acedergren/apple-signin-kit
+repo_url: https://github.com/acedergren/apple-signin-kit
+edit_uri: edit/main/docs/
+
+theme:
+  name: material
+  palette:
+    - media: "(prefers-color-scheme: light)"
+      scheme: default
+      primary: deep purple
+      accent: orange
+      toggle:
+        icon: material/brightness-7
+        name: Switch to dark mode
+    - media: "(prefers-color-scheme: dark)"
+      scheme: slate
+      primary: deep purple
+      accent: orange
+      toggle:
+        icon: material/brightness-4
+        name: Switch to light mode
+  features:
+    - navigation.instant
+    - navigation.tracking
+    - navigation.tabs
+    - navigation.sections
+    - navigation.expand
+    - navigation.top
+    - search.suggest
+    - search.highlight
+    - content.code.copy
+    - content.code.annotate
+  icon:
+    repo: fontawesome/brands/github
+
+plugins:
+  - search
+  - autorefs
+
+markdown_extensions:
+  - pymdownx.highlight:
+      anchor_linenums: true
+      line_spans: __span
+      pygments_lang_class: true
+  - pymdownx.inlinehilite
+  - pymdownx.snippets
+  - pymdownx.superfences:
+      custom_fences:
+        - name: mermaid
+          class: mermaid
+          format: !!python/name:pymdownx.superfences.fence_code_format
+  - pymdownx.tabbed:
+      alternate_style: true
+  - pymdownx.details
+  - admonition
+  - toc:
+      permalink: true
+  - attr_list
+  - md_in_html
+
+extra:
+  social:
+    - icon: fontawesome/brands/github
+      link: https://github.com/acedergren
+  generator: false
+
+copyright: Copyright &copy; 2025 Alex Cedergren - Apache 2.0 License
+
+nav:
+  - Home: index.md
+  - Getting Started:
+      - Installation: getting-started/installation.md
+      - Quick Start: getting-started/quickstart.md
+      - Apple Developer Setup: getting-started/apple-setup.md
+  - Packages:
+      - Overview: packages/index.md
+      - Backend:
+          - fastify-apple-auth: packages/fastify-apple-auth.md
+          - Database Adapters:
+              - Oracle: packages/adapters/oracle.md
+              - Drizzle: packages/adapters/drizzle.md
+              - MongoDB: packages/adapters/mongodb.md
+      - Frontend:
+          - sveltekit-apple-signin: packages/sveltekit-apple-signin.md
+      - Mobile:
+          - apple-signin-kit (iOS): packages/apple-signin-kit.md
+  - Security:
+      - Overview: security/index.md
+      - PKCE Flow: security/pkce.md
+      - Account Lockout: security/account-lockout.md
+      - Session Management: security/sessions.md
+  - API Reference:
+      - Types: api/types.md
+      - Fastify Plugin: api/fastify-plugin.md
+      - SvelteKit Hooks: api/sveltekit-hooks.md
+      - Swift SDK: api/swift-sdk.md
+  - Contributing: contributing.md
+  - Changelog: changelog.md
