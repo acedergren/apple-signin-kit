@@ -1,4 +1,4 @@
-site_name: Apple Sign-In SDK
+site_name: Apple Sign-In Kit
 site_description: Production-grade Apple Sign-In ecosystem for Fastify, SvelteKit, and iOS
 site_author: Alex Cedergren
 site_url: https://acedergren.github.io/apple-signin-kit/
@@ -9,37 +9,52 @@ edit_uri: edit/main/docs/
 
 theme:
   name: material
+  custom_dir: docs/overrides
   palette:
-    - media: "(prefers-color-scheme: light)"
-      scheme: default
-      primary: deep purple
-      accent: orange
-      toggle:
-        icon: material/brightness-7
-        name: Switch to dark mode
+    # Dark mode (default) - Running Days bioluminescence theme
     - media: "(prefers-color-scheme: dark)"
       scheme: slate
-      primary: deep purple
-      accent: orange
+      primary: custom
+      accent: custom
       toggle:
         icon: material/brightness-4
         name: Switch to light mode
+    # Light mode
+    - media: "(prefers-color-scheme: light)"
+      scheme: default
+      primary: custom
+      accent: custom
+      toggle:
+        icon: material/brightness-7
+        name: Switch to dark mode
+  font:
+    text: Inter
+    code: JetBrains Mono
   features:
     - navigation.instant
+    - navigation.instant.prefetch
     - navigation.tracking
     - navigation.tabs
+    - navigation.tabs.sticky
     - navigation.sections
     - navigation.expand
     - navigation.top
+    - navigation.footer
     - search.suggest
     - search.highlight
+    - search.share
     - content.code.copy
     - content.code.annotate
+    - content.tabs.link
+    - toc.follow
   icon:
     repo: fontawesome/brands/github
+    logo: material/shield-key
+  favicon: assets/favicon.png
 
 plugins:
-  - search
+  - search:
+      separator: '[\s\-,:!=\[\]()"/]+|(?!\b)(?=[A-Z][a-z])|\.(?!\d)|&[lg]t;'
   - autorefs
 
 markdown_extensions:
@@ -47,8 +62,11 @@ markdown_extensions:
       anchor_linenums: true
       line_spans: __span
       pygments_lang_class: true
+      auto_title: true
   - pymdownx.inlinehilite
-  - pymdownx.snippets
+  - pymdownx.snippets:
+      auto_append:
+        - includes/abbreviations.md
   - pymdownx.superfences:
       custom_fences:
         - name: mermaid
@@ -56,18 +74,41 @@ markdown_extensions:
           format: !!python/name:pymdownx.superfences.fence_code_format
   - pymdownx.tabbed:
       alternate_style: true
+      combine_header_slug: true
   - pymdownx.details
+  - pymdownx.mark
+  - pymdownx.keys
+  - pymdownx.tasklist:
+      custom_checkbox: true
   - admonition
   - toc:
       permalink: true
+      toc_depth: 3
   - attr_list
   - md_in_html
+  - def_list
+  - footnotes
+  - abbr
+  - tables
 
 extra:
   social:
     - icon: fontawesome/brands/github
       link: https://github.com/acedergren
+      name: GitHub
+    - icon: fontawesome/brands/npm
+      link: https://www.npmjs.com/org/acedergren
+      name: npm
+  analytics:
+    provider: google
+    property: !ENV [GOOGLE_ANALYTICS_KEY, '']
   generator: false
+  status:
+    new: Recently added
+    deprecated: Deprecated
+
+extra_css:
+  - stylesheets/running-days.css
 
 copyright: Copyright &copy; 2025 Alex Cedergren - Apache 2.0 License
 
